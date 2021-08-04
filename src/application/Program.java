@@ -1,25 +1,31 @@
 package application;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.File;
+import java.util.Scanner;
 
 public class Program {
 
 	public static void main(String[] args) {
-		String[] lines = new String[] {"Good Morning", "Good Afternoon", "Good night"};
+		Scanner sc = new Scanner(System.in);
 		
-		String path = "C:\\temp\\out.txt";
+		System.out.println("Enter a folder path: ");
+		String path = sc.nextLine();
 		
-		try(BufferedWriter bw = new BufferedWriter(new FileWriter(path))){
-			for(String cacatua : lines) {
-				bw.write(cacatua);
-				bw.newLine();
-			}
-			
-		}catch(IOException e) {
-			System.out.println(e.getMessage());
+		File f = new File(path);
+		File[] folders = f.listFiles(File::isDirectory);
+		System.out.println("FOLDERS:");
+		for(File fold : folders) {
+			System.out.println(fold);
 		}
+		File[] fl = f.listFiles(File::isFile);
+		System.out.println("FILES");
+		for(File file : fl) {
+			System.out.println(file);
+		}
+		
+		boolean success = new File(path + "\\subdir").mkdir();
+		System.out.println("Created a directory sucessfull!");
+		
 	}
 
 }
